@@ -5,18 +5,10 @@ module.exports = {
   entry: {
     index: './src/index.js',
   },
-  devServer: {
-    static: './dist',
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      title: 'Output Management',
-      template: './src/index.html',
-    }),
-  ],
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
+    clean: true,
   },
   module: {
     rules: [
@@ -26,8 +18,17 @@ module.exports = {
       },
     ],
   },
+  devServer: {
+    static: './dist',
+  },
   optimization: {
     runtimeChunk: 'single',
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: 'Output Management',
+      template: './src/index.html',
+    }),
+  ],
   mode: 'none',
 };

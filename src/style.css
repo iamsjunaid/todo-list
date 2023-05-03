@@ -28,7 +28,7 @@ button {
 .wrapper {
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 40%;
   background-color: #fff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
@@ -51,6 +51,8 @@ h1 {
 .heading-container {
   display: flex;
   align-items: center;
+  justify-content: center;
+  padding: 1.5em 1.1em;
 }
 
 i {
@@ -110,8 +112,16 @@ input[type="checkbox"] {
   filter: hue-rotate(10deg);
 }
 
-input::placeholder {
-  font-style: italic;
+#task {
+  border: 2px #f6f6f6;
+  border-style: solid none;
+  padding: 1em;
+}
+
+.fa-long-arrow-down {
+  position: absolute;
+  top: 38%;
+  right: 32%;
 }
 
 ul {

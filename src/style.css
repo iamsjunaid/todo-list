@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: 'Roboto Mono', monospace;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
+  background-color: #f6f6f6;
+}
+
+button {
+  font-family: 'Roboto Mono', monospace;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #000;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1em;
+}
+
+h1 {
+  font-weight: 700;
+  font-size: 1.3em;
+  width: 100%;
+  float: left;
+  display: flex;
+}
+
+.heading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5em 1.1em;
+}
+
+i {
+  color: #000;
+  cursor: pointer;
+}
+
+form {
+  display: flex;
+  justify-content: space-between;
+  padding: 1em;
+}
+
+button,
+input {
+  background-color: transparent;
+  border: none;
+}
+
+input {
+  font-size: 1em;
+}
+
+form input,
+.edit-todo {
+  width: 100%;
+  color: #000;
+}
+
+.todo-list {
+  margin-top: 5px;
+  overflow-y: auto;
+}
+
+.todo-li {
+  text-align: left;
+}
+
+.edit-todo {
+  color: #ff4c29;
+}
+
+form input:focus,
+.edit-todo:focus {
+  outline: none;
+  width: 100%;
+  color: #000;
+}
+
+.list-item {
+  width: 100%;
+  display: flex;
+  gap: 1em;
+}
+
+input[type="checkbox"] {
+  filter: hue-rotate(10deg);
+}
+
+#task {
+  border: 2px #f6f6f6;
+  border-style: solid none;
+  padding: 1em;
+}
+
+.fa-long-arrow-down {
+  position: absolute;
+  top: 38%;
+  right: 32%;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  display: flex;
+  padding: 1em;
+  gap: 0.5em;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.clear-btn {
+  padding: 1em;
+  width: 100%;
+  font-size: 1em;
+  color: #000;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  cursor: pointer;
+  background-color: #f6f6f6;
+}
+
+.clear-btn:hover {
+  text-decoration: underline;
+}

@@ -8,7 +8,8 @@
   <script src="https://kit.fontawesome.com/de2c90f7df.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="shortcut icon" href="#">
-  <link rel="stylesheet" href="./style.css" type="text/css">
+  <link href="./style.css" type="text/css">
+  <script src="./index.js" type="text/javascript"></script>
   <title>Document</title>
 </head>
 
@@ -18,13 +19,15 @@
       <h1>Today's todos</h1>
       <i class="fa fa-refresh"></i>
     </div>
-    <input type="text" name="task" id="task" placeholder="Add to your list...">
-    <i class="fa fa-long-arrow-down"></i>
+    <div class="desc-container">
+      <input type="text" name="task" id="task-description-input" placeholder="Add to your list...">
+      <button id="add-task-button" class="fa fa-add"></button>
+    </div>
     <ul id="task-list"></ul>
     <div id="task-list-placeholder"></div>
     <button class="clear-btn">Clear All Completed</button>
   </section>
-  <script src="./index.js"></script>
+  
 </body>
 
 </html>

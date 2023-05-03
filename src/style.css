@@ -1,11 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
 
-:root {
-  --lightblue: #b9d9eb;
-  --white: #000;
-  --darkblue: #002d62;
-}
-
 * {
   box-sizing: border-box;
   padding: 0;
@@ -20,6 +14,11 @@ body {
   align-items: center;
   text-align: center;
   height: 100vh;
+  background-color: #f6f6f6;
+}
+
+button {
+  font-family: 'Roboto Mono', monospace;
 }
 
 .border-bottom {
@@ -30,9 +29,8 @@ body {
   display: flex;
   flex-direction: column;
   width: 50%;
-  background-color: lightgreen;
-  border-radius: 10px;
-  box-shadow: 5px 5px 2px lightgray;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 header {
@@ -46,10 +44,16 @@ h1 {
   font-weight: 700;
   font-size: 1.3em;
   width: 100%;
+  float: left;
+  display: flex;
+}
+
+.heading-container {
+  display: flex;
+  align-items: center;
 }
 
 i {
-  font-size: 2em !important;
   color: #000;
   cursor: pointer;
 }
@@ -130,6 +134,7 @@ li {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   cursor: pointer;
+  background-color: #f6f6f6;
 }
 
 .clear-btn:hover {

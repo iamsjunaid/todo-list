@@ -32,8 +32,12 @@ tasks.forEach((task) => {
   const taskDescription = document.createElement('span');
   taskDescription.textContent = task.description;
 
+  const menu = document.createElement('i');
+  menu.className = 'fa fa-bars';
+
   listItem.appendChild(checkbox);
   listItem.appendChild(taskDescription);
+  listItem.appendChild(menu);
   taskList.appendChild(listItem);
 });
 

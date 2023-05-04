@@ -126,7 +126,7 @@ input[type="checkbox"] {
   padding: 1em;
 }
 
-.desc-container:focus{
+.desc-container:focus {
   border: 2px solid #222;
 }
 
@@ -164,10 +164,10 @@ li {
 }
 
 .icons-btn {
-  transition: all .1s linear;
+  transition: all 0.1s linear;
 }
 
-.icons-btn:hover{
+.icons-btn:hover {
   transform: scale(1.1);
   cursor: pointer;
 }

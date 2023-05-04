@@ -12,10 +12,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var _statusUpdates_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(11);
 
-
+ // eslint-disable-line import/no-cycle
 
 const TASKS_STORAGE_KEY = 'tasks';
-let tasks = [];
+let tasks = []; // eslint-disable-line import/no-mutable-exports
 let nextIndex = 0;
 
 const taskList = document.getElementById('task-list');
@@ -23,10 +23,6 @@ const taskListPlaceholder = document.getElementById('task-list-placeholder');
 const taskDescriptionInput = document.getElementById('task-description-input');
 const addTaskButton = document.getElementById('add-task-button');
 const clearCompletedBtn = document.getElementById('clear-completed');
-
-clearCompletedBtn.addEventListener('click', () => {
-  clearCompletedTasks();
-})
 
 const saveTasks = () => {
   localStorage.setItem(TASKS_STORAGE_KEY, JSON.stringify(tasks));
@@ -48,12 +44,6 @@ const deleteTask = (index) => {
   }
   saveTasks();
   renderTaskList(); // eslint-disable-line no-use-before-define
-};
-
-const clearCompletedTasks = () => {
-  tasks = tasks.filter(item => !item.completed);
-  saveTasks();
-  renderTaskList();
 };
 
 const renderTaskList = () => {
@@ -82,7 +72,7 @@ const renderTaskList = () => {
     });
 
     const deleteButton = document.createElement('button');
-    deleteButton.className = 'fas fa-trash';
+    deleteButton.className = 'fas fa-trash icons-btn';
     deleteButton.ariaHidden = 'true';
     deleteButton.addEventListener('click', () => {
       deleteTask(index);
@@ -94,6 +84,20 @@ const renderTaskList = () => {
     taskList.appendChild(listItem);
   });
 };
+
+const clearCompletedTasks = () => {
+  tasks = tasks.filter((item) => !item.completed);
+  tasks.map((task, index) => {
+    task.index = index + 1;
+    return task;
+  });
+  saveTasks();
+  renderTaskList();
+};
+
+clearCompletedBtn.addEventListener('click', () => {
+  clearCompletedTasks();
+});
 
 const loadTasks = () => {
   const tasksJson = localStorage.getItem(TASKS_STORAGE_KEY);
@@ -447,7 +451,7 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "* {\r\n  box-sizing: border-box;\r\n  padding: 0;\r\n  margin: 0;\r\n}\r\n\r\nbody {\r\n  font-family: 'Roboto Mono', monospace;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: center;\r\n  align-items: center;\r\n  text-align: center;\r\n  height: 100vh;\r\n  background-color: #f6f6f6;\r\n}\r\n\r\nbutton {\r\n  font-family: 'Roboto Mono', monospace;\r\n}\r\n\r\n.border-bottom {\r\n  border-bottom: 1px solid #000;\r\n}\r\n\r\n.wrapper {\r\n  display: flex;\r\n  flex-direction: column;\r\n  width: 40%;\r\n  background-color: #fff;\r\n  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);\r\n}\r\n\r\nheader {\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: space-between;\r\n  padding: 1em;\r\n}\r\n\r\nh1 {\r\n  font-weight: 700;\r\n  font-size: 1.3em;\r\n  width: 100%;\r\n  float: left;\r\n  display: flex;\r\n}\r\n\r\n.heading-container {\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  padding: 1.5em 1.1em;\r\n}\r\n\r\ni {\r\n  color: #000;\r\n  cursor: pointer;\r\n}\r\n\r\nform {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  padding: 1em;\r\n}\r\n\r\nbutton,\r\ninput {\r\n  background-color: transparent;\r\n  border: none;\r\n}\r\n\r\ninput {\r\n  font-size: 1em;\r\n}\r\n\r\nform input,\r\n.edit-todo {\r\n  width: 100%;\r\n  color: #000;\r\n}\r\n\r\n.todo-list {\r\n  margin-top: 5px;\r\n  overflow-y: auto;\r\n}\r\n\r\n.todo-li {\r\n  text-align: left;\r\n}\r\n\r\n.edit-todo {\r\n  color: #ff4c29;\r\n}\r\n\r\nform input:focus,\r\n.edit-todo:focus {\r\n  outline: none;\r\n  width: 100%;\r\n  color: #000;\r\n}\r\n\r\n.list-item {\r\n  width: 100%;\r\n  display: flex;\r\n  gap: 1em;\r\n}\r\n\r\n.desc-container {\r\n  display: flex;\r\n  justify-content: space-around;\r\n  border-top: 2px solid;\r\n  border-bottom: 2px solid;\r\n}\r\n\r\ninput[type=\"checkbox\"] {\r\n  filter: hue-rotate(10deg);\r\n}\r\n\r\n#task {\r\n  border: 2px #f6f6f6;\r\n  border-style: solid none;\r\n  padding: 1em;\r\n}\r\n\r\n#task-description-input {\r\n  padding: 1em;\r\n}\r\n\r\n.fa-plus {\r\n  position: fixed;\r\n  top: 50%;\r\n  right: 32%;\r\n}\r\n\r\nul {\r\n  list-style-type: none;\r\n}\r\n\r\nli {\r\n  display: flex;\r\n  padding: 1em;\r\n  gap: 0.5em;\r\n  align-items: center;\r\n  justify-content: space-between;\r\n}\r\n\r\n.clear-btn {\r\n  padding: 1em;\r\n  width: 100%;\r\n  font-size: 1em;\r\n  color: #000;\r\n  border-bottom-left-radius: 10px;\r\n  border-bottom-right-radius: 10px;\r\n  cursor: pointer;\r\n  background-color: #f6f6f6;\r\n}\r\n\r\n.clear-btn:hover {\r\n  text-decoration: underline;\r\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "* {\r\n  box-sizing: border-box;\r\n  padding: 0;\r\n  margin: 0;\r\n}\r\n\r\nbody {\r\n  font-family: 'Roboto Mono', monospace;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: center;\r\n  align-items: center;\r\n  text-align: center;\r\n  height: 100vh;\r\n  background-color: #f6f6f6;\r\n}\r\n\r\nbutton {\r\n  font-family: 'Roboto Mono', monospace;\r\n}\r\n\r\n.border-bottom {\r\n  border-bottom: 1px solid #000;\r\n}\r\n\r\n.wrapper {\r\n  display: flex;\r\n  flex-direction: column;\r\n  width: 40%;\r\n  background-color: #fff;\r\n  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);\r\n}\r\n\r\nheader {\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: space-between;\r\n  padding: 1em;\r\n}\r\n\r\nh1 {\r\n  font-weight: 700;\r\n  font-size: 1.3em;\r\n  width: 100%;\r\n  float: left;\r\n  display: flex;\r\n}\r\n\r\n.heading-container {\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  padding: 1.5em 1.1em;\r\n}\r\n\r\ni {\r\n  color: #000;\r\n  cursor: pointer;\r\n}\r\n\r\nform {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  padding: 1em;\r\n}\r\n\r\nbutton,\r\ninput {\r\n  background-color: transparent;\r\n  border: none;\r\n}\r\n\r\ninput {\r\n  font-size: 1em;\r\n}\r\n\r\nform input,\r\n.edit-todo {\r\n  width: 100%;\r\n  color: #000;\r\n}\r\n\r\n.todo-list {\r\n  margin-top: 5px;\r\n  overflow-y: auto;\r\n}\r\n\r\n.todo-li {\r\n  text-align: left;\r\n}\r\n\r\n.edit-todo {\r\n  color: #ff4c29;\r\n}\r\n\r\nform input:focus,\r\n.edit-todo:focus {\r\n  outline: none;\r\n  width: 100%;\r\n  color: #000;\r\n}\r\n\r\n.list-item {\r\n  width: 100%;\r\n  display: flex;\r\n  gap: 1em;\r\n}\r\n\r\n.desc-container {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  border-top: 2px solid;\r\n  border-bottom: 2px solid;\r\n  padding: 1em;\r\n}\r\n\r\ninput[type=\"checkbox\"] {\r\n  filter: hue-rotate(10deg);\r\n}\r\n\r\n#task {\r\n  border: 2px #f6f6f6;\r\n  border-style: solid none;\r\n  padding: 1em;\r\n}\r\n\r\n.desc-container:focus{\r\n  border: 2px solid #222;\r\n}\r\n\r\n.fa-plus {\r\n  position: fixed;\r\n  top: 50%;\r\n  right: 32%;\r\n}\r\n\r\nul {\r\n  list-style-type: none;\r\n}\r\n\r\nli {\r\n  display: flex;\r\n  padding: 1em;\r\n  gap: 0.5em;\r\n  align-items: center;\r\n  justify-content: space-between;\r\n}\r\n\r\n.clear-btn {\r\n  padding: 1em;\r\n  width: 100%;\r\n  font-size: 1em;\r\n  color: #000;\r\n  border-bottom-left-radius: 10px;\r\n  border-bottom-right-radius: 10px;\r\n  cursor: pointer;\r\n  background-color: #f6f6f6;\r\n}\r\n\r\n.clear-btn:hover {\r\n  text-decoration: underline;\r\n}\r\n\r\n.icons-btn {\r\n  transition: all .1s linear;\r\n}\r\n\r\n.icons-btn:hover{\r\n  transform: scale(1.1);\r\n  cursor: pointer;\r\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -562,21 +566,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "markIncomplete": () => (/* binding */ markIncomplete)
 /* harmony export */ });
 /* harmony import */ var _index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
-
+ // eslint-disable-line import/no-cycle
 
 const markComplete = (index) => {
-    // console.log("completed")
-    _index_js__WEBPACK_IMPORTED_MODULE_0__.tasks[index].completed = true;
-    (0,_index_js__WEBPACK_IMPORTED_MODULE_0__.saveTasks)();
-    (0,_index_js__WEBPACK_IMPORTED_MODULE_0__.renderTaskList)();
-}
+  _index_js__WEBPACK_IMPORTED_MODULE_0__.tasks[index].completed = true;
+  (0,_index_js__WEBPACK_IMPORTED_MODULE_0__.saveTasks)();
+  (0,_index_js__WEBPACK_IMPORTED_MODULE_0__.renderTaskList)();
+};
 
 const markIncomplete = (index) => {
-    // console.log("incompleted")
-    _index_js__WEBPACK_IMPORTED_MODULE_0__.tasks[index].completed = false;
-    (0,_index_js__WEBPACK_IMPORTED_MODULE_0__.saveTasks)();
-    (0,_index_js__WEBPACK_IMPORTED_MODULE_0__.renderTaskList)();
-}
+  _index_js__WEBPACK_IMPORTED_MODULE_0__.tasks[index].completed = false;
+  (0,_index_js__WEBPACK_IMPORTED_MODULE_0__.saveTasks)();
+  (0,_index_js__WEBPACK_IMPORTED_MODULE_0__.renderTaskList)();
+};
+
 
 /***/ })
 ],

@@ -1,15 +1,13 @@
-import { tasks, saveTasks, renderTaskList } from "./index.js";
+import { tasks, saveTasks, renderTaskList } from './index.js'; // eslint-disable-line import/no-cycle
 
 export const markComplete = (index) => {
-    // console.log("completed")
-    tasks[index].completed = true;
-    saveTasks();
-    renderTaskList();
-}
+  tasks[index].completed = true;
+  saveTasks();
+  renderTaskList();
+};
 
 export const markIncomplete = (index) => {
-    // console.log("incompleted")
-    tasks[index].completed = false;
-    saveTasks();
-    renderTaskList();
-}
+  tasks[index].completed = false;
+  saveTasks();
+  renderTaskList();
+};

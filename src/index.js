@@ -1,15 +1,21 @@
 import './style.css';
+import { markComplete, markIncomplete } from './statusUpdates.js';
 
 const TASKS_STORAGE_KEY = 'tasks';
-let tasks = [];
+export let tasks = [];
 let nextIndex = 0;
 
 const taskList = document.getElementById('task-list');
 const taskListPlaceholder = document.getElementById('task-list-placeholder');
 const taskDescriptionInput = document.getElementById('task-description-input');
 const addTaskButton = document.getElementById('add-task-button');
+const clearCompletedBtn = document.getElementById('clear-completed');
 
-const saveTasks = () => {
+clearCompletedBtn.addEventListener('click', () => {
+  clearCompletedTasks();
+})
+
+export const saveTasks = () => {
   localStorage.setItem(TASKS_STORAGE_KEY, JSON.stringify(tasks));
 };
 
@@ -31,7 +37,13 @@ const deleteTask = (index) => {
   renderTaskList(); // eslint-disable-line no-use-before-define
 };
 
-const renderTaskList = () => {
+const clearCompletedTasks = () => {
+  tasks = tasks.filter(item => !item.completed);
+  saveTasks();
+  renderTaskList();
+};
+
+export const renderTaskList = () => {
   taskList.innerHTML = '';
   tasks.sort((a, b) => a.index - b.index);
   tasks.forEach((task, index) => {
@@ -39,6 +51,13 @@ const renderTaskList = () => {
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.checked = task.completed;
+    checkbox.addEventListener('change', () => {
+      if (checkbox.checked) {
+        markComplete(index);
+      } else {
+        markIncomplete(index);
+      }
+    });
 
     const taskDescriptionElement = document.createElement('span');
     taskDescriptionElement.textContent = task.description;

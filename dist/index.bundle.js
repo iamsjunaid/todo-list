@@ -4,7 +4,14 @@
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "renderTaskList": () => (/* binding */ renderTaskList),
+/* harmony export */   "saveTasks": () => (/* binding */ saveTasks),
+/* harmony export */   "tasks": () => (/* binding */ tasks)
+/* harmony export */ });
 /* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var _statusUpdates_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(11);
+
 
 
 const TASKS_STORAGE_KEY = 'tasks';
@@ -15,6 +22,11 @@ const taskList = document.getElementById('task-list');
 const taskListPlaceholder = document.getElementById('task-list-placeholder');
 const taskDescriptionInput = document.getElementById('task-description-input');
 const addTaskButton = document.getElementById('add-task-button');
+const clearCompletedBtn = document.getElementById('clear-completed');
+
+clearCompletedBtn.addEventListener('click', () => {
+  clearCompletedTasks();
+})
 
 const saveTasks = () => {
   localStorage.setItem(TASKS_STORAGE_KEY, JSON.stringify(tasks));
@@ -38,6 +50,12 @@ const deleteTask = (index) => {
   renderTaskList(); // eslint-disable-line no-use-before-define
 };
 
+const clearCompletedTasks = () => {
+  tasks = tasks.filter(item => !item.completed);
+  saveTasks();
+  renderTaskList();
+};
+
 const renderTaskList = () => {
   taskList.innerHTML = '';
   tasks.sort((a, b) => a.index - b.index);
@@ -46,6 +64,13 @@ const renderTaskList = () => {
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.checked = task.completed;
+    checkbox.addEventListener('change', () => {
+      if (checkbox.checked) {
+        (0,_statusUpdates_js__WEBPACK_IMPORTED_MODULE_1__.markComplete)(index);
+      } else {
+        (0,_statusUpdates_js__WEBPACK_IMPORTED_MODULE_1__.markIncomplete)(index);
+      }
+    });
 
     const taskDescriptionElement = document.createElement('span');
     taskDescriptionElement.textContent = task.description;
@@ -526,6 +551,32 @@ module.exports = function (cssWithMappingToString) {
   };
   return list;
 };
+
+/***/ }),
+/* 11 */
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "markComplete": () => (/* binding */ markComplete),
+/* harmony export */   "markIncomplete": () => (/* binding */ markIncomplete)
+/* harmony export */ });
+/* harmony import */ var _index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
+
+
+const markComplete = (index) => {
+    // console.log("completed")
+    _index_js__WEBPACK_IMPORTED_MODULE_0__.tasks[index].completed = true;
+    (0,_index_js__WEBPACK_IMPORTED_MODULE_0__.saveTasks)();
+    (0,_index_js__WEBPACK_IMPORTED_MODULE_0__.renderTaskList)();
+}
+
+const markIncomplete = (index) => {
+    // console.log("incompleted")
+    _index_js__WEBPACK_IMPORTED_MODULE_0__.tasks[index].completed = false;
+    (0,_index_js__WEBPACK_IMPORTED_MODULE_0__.saveTasks)();
+    (0,_index_js__WEBPACK_IMPORTED_MODULE_0__.renderTaskList)();
+}
 
 /***/ })
 ],

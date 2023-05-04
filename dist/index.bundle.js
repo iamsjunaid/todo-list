@@ -7,49 +7,109 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 
 
-const tasks = [
-  {
-    description: 'Buy groceries',
-    completed: false,
-    index: 2,
-  },
-  {
-    description: 'Do laundry',
-    completed: true,
-    index: 0,
-  },
-  {
-    description: 'Pay bills',
-    completed: false,
-    index: 1,
-  },
-];
+const TASKS_STORAGE_KEY = 'tasks';
+let tasks = [];
+let nextIndex = 0;
 
 const taskList = document.getElementById('task-list');
 const taskListPlaceholder = document.getElementById('task-list-placeholder');
+const taskDescriptionInput = document.getElementById('task-description-input');
+const addTaskButton = document.getElementById('add-task-button');
 
-tasks.sort((a, b) => a.index - b.index);
+const saveTasks = () => {
+  localStorage.setItem(TASKS_STORAGE_KEY, JSON.stringify(tasks));
+};
 
-tasks.forEach((task) => {
-  const listItem = document.createElement('li');
-  const checkbox = document.createElement('input');
-  checkbox.type = 'checkbox';
-  checkbox.checked = task.completed;
+const editTask = (index, newDescription) => {
+  tasks[index].description = newDescription;
 
-  const taskDescription = document.createElement('span');
-  taskDescription.textContent = task.description;
+  saveTasks();
+  renderTaskList(); // eslint-disable-line no-use-before-define
+};
 
-  const menu = document.createElement('i');
-  menu.className = 'fa fa-bars';
+const deleteTask = (index) => {
+  tasks.splice(index, 1);
+  nextIndex -= 1;
 
-  listItem.appendChild(checkbox);
-  listItem.appendChild(taskDescription);
-  listItem.appendChild(menu);
-  taskList.appendChild(listItem);
+  for (let i = index; i < tasks.length; i += 1) {
+    tasks[i].index -= 1;
+  }
+  saveTasks();
+  renderTaskList(); // eslint-disable-line no-use-before-define
+};
+
+const renderTaskList = () => {
+  taskList.innerHTML = '';
+  tasks.sort((a, b) => a.index - b.index);
+  tasks.forEach((task, index) => {
+    const listItem = document.createElement('li');
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.checked = task.completed;
+
+    const taskDescriptionElement = document.createElement('span');
+    taskDescriptionElement.textContent = task.description;
+    taskDescriptionElement.addEventListener('click', () => {
+      const newDescription = prompt('Enter the new task description', task.description); // eslint-disable-line no-alert
+      if (newDescription !== null) {
+        editTask(task.index, newDescription);
+      }
+    });
+
+    const deleteButton = document.createElement('button');
+    deleteButton.className = 'fas fa-trash';
+    deleteButton.ariaHidden = 'true';
+    deleteButton.addEventListener('click', () => {
+      deleteTask(index);
+    });
+
+    listItem.appendChild(checkbox);
+    listItem.appendChild(taskDescriptionElement);
+    listItem.appendChild(deleteButton);
+    taskList.appendChild(listItem);
+  });
+};
+
+const loadTasks = () => {
+  const tasksJson = localStorage.getItem(TASKS_STORAGE_KEY);
+  if (tasksJson) {
+    tasks = JSON.parse(tasksJson);
+    nextIndex = tasks.length;
+  }
+};
+
+const addTask = () => {
+  const taskDescription = taskDescriptionInput.value.trim();
+  if (taskDescription !== '') {
+    const task = {
+      description: taskDescription,
+      completed: false,
+      index: nextIndex,
+    };
+    tasks.push(task);
+    nextIndex += 1;
+
+    saveTasks();
+    renderTaskList();
+
+    taskDescriptionInput.value = '';
+  }
+};
+
+addTaskButton.addEventListener('click', () => {
+  addTask();
 });
 
-taskListPlaceholder.appendChild(taskList);
+taskDescriptionInput.addEventListener('keyup', (event) => {
+  if (event.key === 'Enter') {
+    addTask();
+  }
+});
 
+loadTasks();
+renderTaskList();
+
+taskListPlaceholder.appendChild(taskList);
 
 /***/ }),
 /* 1 */
@@ -362,7 +422,7 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "* {\r\n  box-sizing: border-box;\r\n  padding: 0;\r\n  margin: 0;\r\n}\r\n\r\nbody {\r\n  font-family: 'Roboto Mono', monospace;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: center;\r\n  align-items: center;\r\n  text-align: center;\r\n  height: 100vh;\r\n  background-color: #f6f6f6;\r\n}\r\n\r\nbutton {\r\n  font-family: 'Roboto Mono', monospace;\r\n}\r\n\r\n.border-bottom {\r\n  border-bottom: 1px solid #000;\r\n}\r\n\r\n.wrapper {\r\n  display: flex;\r\n  flex-direction: column;\r\n  width: 40%;\r\n  background-color: #fff;\r\n  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);\r\n}\r\n\r\nheader {\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: space-between;\r\n  padding: 1em;\r\n}\r\n\r\nh1 {\r\n  font-weight: 700;\r\n  font-size: 1.3em;\r\n  width: 100%;\r\n  float: left;\r\n  display: flex;\r\n}\r\n\r\n.heading-container {\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  padding: 1.5em 1.1em;\r\n}\r\n\r\ni {\r\n  color: #000;\r\n  cursor: pointer;\r\n}\r\n\r\nform {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  padding: 1em;\r\n}\r\n\r\nbutton,\r\ninput {\r\n  background-color: transparent;\r\n  border: none;\r\n}\r\n\r\ninput {\r\n  font-size: 1em;\r\n}\r\n\r\nform input,\r\n.edit-todo {\r\n  width: 100%;\r\n  color: #000;\r\n}\r\n\r\n.todo-list {\r\n  margin-top: 5px;\r\n  overflow-y: auto;\r\n}\r\n\r\n.todo-li {\r\n  text-align: left;\r\n}\r\n\r\n.edit-todo {\r\n  color: #ff4c29;\r\n}\r\n\r\nform input:focus,\r\n.edit-todo:focus {\r\n  outline: none;\r\n  width: 100%;\r\n  color: #000;\r\n}\r\n\r\n.list-item {\r\n  width: 100%;\r\n  display: flex;\r\n  gap: 1em;\r\n}\r\n\r\ninput[type=\"checkbox\"] {\r\n  filter: hue-rotate(10deg);\r\n}\r\n\r\n#task {\r\n  border: 2px #f6f6f6;\r\n  border-style: solid none;\r\n  padding: 1em;\r\n}\r\n\r\n.fa-long-arrow-down {\r\n  position: absolute;\r\n  top: 38%;\r\n  right: 32%;\r\n}\r\n\r\nul {\r\n  list-style-type: none;\r\n}\r\n\r\nli {\r\n  display: flex;\r\n  padding: 1em;\r\n  gap: 0.5em;\r\n  align-items: center;\r\n  justify-content: space-between;\r\n}\r\n\r\n.clear-btn {\r\n  padding: 1em;\r\n  width: 100%;\r\n  font-size: 1em;\r\n  color: #000;\r\n  border-bottom-left-radius: 10px;\r\n  border-bottom-right-radius: 10px;\r\n  cursor: pointer;\r\n  background-color: #f6f6f6;\r\n}\r\n\r\n.clear-btn:hover {\r\n  text-decoration: underline;\r\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "* {\r\n  box-sizing: border-box;\r\n  padding: 0;\r\n  margin: 0;\r\n}\r\n\r\nbody {\r\n  font-family: 'Roboto Mono', monospace;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: center;\r\n  align-items: center;\r\n  text-align: center;\r\n  height: 100vh;\r\n  background-color: #f6f6f6;\r\n}\r\n\r\nbutton {\r\n  font-family: 'Roboto Mono', monospace;\r\n}\r\n\r\n.border-bottom {\r\n  border-bottom: 1px solid #000;\r\n}\r\n\r\n.wrapper {\r\n  display: flex;\r\n  flex-direction: column;\r\n  width: 40%;\r\n  background-color: #fff;\r\n  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);\r\n}\r\n\r\nheader {\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: space-between;\r\n  padding: 1em;\r\n}\r\n\r\nh1 {\r\n  font-weight: 700;\r\n  font-size: 1.3em;\r\n  width: 100%;\r\n  float: left;\r\n  display: flex;\r\n}\r\n\r\n.heading-container {\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  padding: 1.5em 1.1em;\r\n}\r\n\r\ni {\r\n  color: #000;\r\n  cursor: pointer;\r\n}\r\n\r\nform {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  padding: 1em;\r\n}\r\n\r\nbutton,\r\ninput {\r\n  background-color: transparent;\r\n  border: none;\r\n}\r\n\r\ninput {\r\n  font-size: 1em;\r\n}\r\n\r\nform input,\r\n.edit-todo {\r\n  width: 100%;\r\n  color: #000;\r\n}\r\n\r\n.todo-list {\r\n  margin-top: 5px;\r\n  overflow-y: auto;\r\n}\r\n\r\n.todo-li {\r\n  text-align: left;\r\n}\r\n\r\n.edit-todo {\r\n  color: #ff4c29;\r\n}\r\n\r\nform input:focus,\r\n.edit-todo:focus {\r\n  outline: none;\r\n  width: 100%;\r\n  color: #000;\r\n}\r\n\r\n.list-item {\r\n  width: 100%;\r\n  display: flex;\r\n  gap: 1em;\r\n}\r\n\r\n.desc-container {\r\n  display: flex;\r\n  justify-content: space-around;\r\n  border-top: 2px solid;\r\n  border-bottom: 2px solid;\r\n}\r\n\r\ninput[type=\"checkbox\"] {\r\n  filter: hue-rotate(10deg);\r\n}\r\n\r\n#task {\r\n  border: 2px #f6f6f6;\r\n  border-style: solid none;\r\n  padding: 1em;\r\n}\r\n\r\n#task-description-input {\r\n  padding: 1em;\r\n}\r\n\r\n.fa-plus {\r\n  position: fixed;\r\n  top: 50%;\r\n  right: 32%;\r\n}\r\n\r\nul {\r\n  list-style-type: none;\r\n}\r\n\r\nli {\r\n  display: flex;\r\n  padding: 1em;\r\n  gap: 0.5em;\r\n  align-items: center;\r\n  justify-content: space-between;\r\n}\r\n\r\n.clear-btn {\r\n  padding: 1em;\r\n  width: 100%;\r\n  font-size: 1em;\r\n  color: #000;\r\n  border-bottom-left-radius: 10px;\r\n  border-bottom-right-radius: 10px;\r\n  cursor: pointer;\r\n  background-color: #f6f6f6;\r\n}\r\n\r\n.clear-btn:hover {\r\n  text-decoration: underline;\r\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

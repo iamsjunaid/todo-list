@@ -108,6 +108,13 @@ form input:focus,
   gap: 1em;
 }
 
+.desc-container {
+  display: flex;
+  justify-content: space-around;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+}
+
 input[type="checkbox"] {
   filter: hue-rotate(10deg);
 }
@@ -118,9 +125,13 @@ input[type="checkbox"] {
   padding: 1em;
 }
 
-.fa-long-arrow-down {
-  position: absolute;
-  top: 38%;
+#task-description-input {
+  padding: 1em;
+}
+
+.fa-plus {
+  position: fixed;
+  top: 50%;
   right: 32%;
 }
 

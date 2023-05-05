@@ -1,15 +1,17 @@
 import './style.css';
+import { markComplete, markIncomplete } from './statusUpdates.js'; // eslint-disable-line import/no-cycle
 
 const TASKS_STORAGE_KEY = 'tasks';
-let tasks = [];
+export let tasks = []; // eslint-disable-line import/no-mutable-exports
 let nextIndex = 0;
 
 const taskList = document.getElementById('task-list');
 const taskListPlaceholder = document.getElementById('task-list-placeholder');
 const taskDescriptionInput = document.getElementById('task-description-input');
 const addTaskButton = document.getElementById('add-task-button');
+const clearCompletedBtn = document.getElementById('clear-completed');
 
-const saveTasks = () => {
+export const saveTasks = () => {
   localStorage.setItem(TASKS_STORAGE_KEY, JSON.stringify(tasks));
 };
 
@@ -31,7 +33,7 @@ const deleteTask = (index) => {
   renderTaskList(); // eslint-disable-line no-use-before-define
 };
 
-const renderTaskList = () => {
+export const renderTaskList = () => {
   taskList.innerHTML = '';
   tasks.sort((a, b) => a.index - b.index);
   tasks.forEach((task, index) => {
@@ -39,6 +41,13 @@ const renderTaskList = () => {
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.checked = task.completed;
+    checkbox.addEventListener('change', () => {
+      if (checkbox.checked) {
+        markComplete(index);
+      } else {
+        markIncomplete(index);
+      }
+    });
 
     const taskDescriptionElement = document.createElement('span');
     taskDescriptionElement.textContent = task.description;
@@ -50,7 +59,7 @@ const renderTaskList = () => {
     });
 
     const deleteButton = document.createElement('button');
-    deleteButton.className = 'fas fa-trash';
+    deleteButton.className = 'fas fa-trash icons-btn';
     deleteButton.ariaHidden = 'true';
     deleteButton.addEventListener('click', () => {
       deleteTask(index);
@@ -62,6 +71,20 @@ const renderTaskList = () => {
     taskList.appendChild(listItem);
   });
 };
+
+const clearCompletedTasks = () => {
+  tasks = tasks.filter((item) => !item.completed);
+  tasks.map((task, index) => {
+    task.index = index + 1;
+    return task;
+  });
+  saveTasks();
+  renderTaskList();
+};
+
+clearCompletedBtn.addEventListener('click', () => {
+  clearCompletedTasks();
+});
 
 const loadTasks = () => {
   const tasksJson = localStorage.getItem(TASKS_STORAGE_KEY);

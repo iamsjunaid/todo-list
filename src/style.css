@@ -110,9 +110,10 @@ form input:focus,
 
 .desc-container {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   border-top: 2px solid;
   border-bottom: 2px solid;
+  padding: 1em;
 }
 
 input[type="checkbox"] {
@@ -125,8 +126,8 @@ input[type="checkbox"] {
   padding: 1em;
 }
 
-#task-description-input {
-  padding: 1em;
+.desc-container:focus {
+  border: 2px solid #222;
 }
 
 .fa-plus {
@@ -160,4 +161,13 @@ li {
 
 .clear-btn:hover {
   text-decoration: underline;
+}
+
+.icons-btn {
+  transition: all 0.1s linear;
+}
+
+.icons-btn:hover {
+  transform: scale(1.1);
+  cursor: pointer;
 }

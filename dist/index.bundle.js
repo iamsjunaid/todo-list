@@ -87,9 +87,10 @@ const renderTaskList = () => {
 
 const clearCompletedTasks = () => {
   tasks = tasks.filter((item) => !item.completed);
-  tasks.map((task, index) => {
-    task.index = index + 1;
-    return task;
+  let i = 0;
+  tasks.forEach((task) => {
+    task.index = i;
+    i += 1;
   });
   saveTasks();
   renderTaskList();

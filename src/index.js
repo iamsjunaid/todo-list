@@ -22,7 +22,7 @@ const editTask = (index, newDescription) => {
   renderTaskList(); // eslint-disable-line no-use-before-define
 };
 
-const deleteTask = (index) => {
+export const deleteTask = (index) => {
   tasks.splice(index, 1);
   nextIndex -= 1;
 
@@ -95,7 +95,7 @@ const loadTasks = () => {
   }
 };
 
-const addTask = () => {
+export const addTask = () => {
   const taskDescription = taskDescriptionInput.value.trim();
   if (taskDescription !== '') {
     const task = {

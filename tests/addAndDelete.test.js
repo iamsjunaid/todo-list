@@ -1,5 +1,6 @@
 import { addTask, deleteTask } from "../src/index.js";
-
+let emptyList=[]
 describe('add and delete functions', ()=>{
-    test('should first', () => { second })
+    test('Add item', () =>
+     { expect(addTask()).toEqual(emptyList)})
 })
